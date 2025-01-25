@@ -14,7 +14,7 @@ class GameEngineTest {
 
     @Test
     fun move() {
-        printGame()
+//        printGame()
         gameEngine.move(1, 2)
         printGame()
     }

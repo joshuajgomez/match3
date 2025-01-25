@@ -16,26 +16,16 @@ val item4 = Item(Icons.Rounded.Adb, "D", Color.Green)
 val item5 = Item(Icons.Rounded.AcUnit, "E", Color.Blue)
 
 fun getItems() = listOf(
-    item1, item2, item3, item4, item5,
-    item1, item2, item3, item4, item5,
-    item1, item2, item3, item4, item5,
-    item1, item2, item3, item4, item5,
-    item1, item2, item3, item4, item5,
-    item1, item2, item3, item4, item5,
-    item1, item2, item3, item4, item5,
-    item1, item2, item3, item4, item5,
-    item1, item2, item3, item4, item5,
-    item1, item2, item3, item4, item5,
-    item1, item2, item3, item4, item5,
-    item1, item2, item3, item4, item5,
-    item1, item2, item3, item4, item5,
-    item1, item2, item3, item4, item5,
-    item1, item2, item3, item4, item5,
-    item1, item2, item3, item4, item5,
-    item1, item2, item3, item4, item5,
-    item1, item2, item3, item4, item5,
-    item1, item2, item3, item4, item5,
-    item1, item2, item3, item4, item5,
+    item1, item2, item3, item4, item5, item1, item2, item3, item4, item5,
+    item1, item2, item3, item4, item5, item1, item2, item3, item4, item5,
+    item1, item2, item3, item4, item5, item1, item2, item3, item4, item5,
+    item1, item2, item3, item4, item5, item1, item2, item3, item4, item5,
+    item1, item2, item3, item4, item5, item1, item2, item3, item4, item5,
+    item1, item2, item3, item4, item5, item1, item1, item1, item4, item5,
+    item1, item2, item3, item4, item5, item1, item2, item3, item4, item5,
+    item1, item2, item3, item4, item5, item1, item2, item3, item4, item5,
+    item1, item2, item3, item4, item5, item1, item2, item3, item4, item5,
+    item1, item2, item3, item4, item5, item1, item2, item3, item4, item5,
 ).mapIndexed { index, item ->
     item.copy(position = index)
 }
