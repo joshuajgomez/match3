@@ -27,27 +27,29 @@ class GameEngine
 
     private fun check3Match(): List<Int> {
         var match = listOf<Int>()
-        items.forEachRow { it ->
-            check3MatchPerList(it).let {
-                if (it.isNotEmpty()) {
-                    match = it
-                    return@forEachRow
+        run loop@{
+            items.forEachRow { it ->
+                check3MatchPerList(it).let {
+                    if (it.isNotEmpty()) {
+                        match = it
+                        return@loop
+                    }
                 }
             }
-        }
-        if (match.isNotEmpty()) return match
-        items.forEachCol { it ->
-            check3MatchPerList(it).let {
-                if (it.isNotEmpty()) {
-                    match = it
-                    return@forEachCol
+            if (match.isNotEmpty()) return match
+            items.forEachCol { it ->
+                check3MatchPerList(it).let {
+                    if (it.isNotEmpty()) {
+                        match = it
+                        return@loop
+                    }
                 }
             }
         }
         return match
     }
 
-    private fun ArrayList<Item>.forEachRow(row: (ArrayList<Item>) -> Unit) {
+    private inline fun ArrayList<Item>.forEachRow(row: (ArrayList<Item>) -> Unit) {
         repeat(10) {
             val start = it * 10
             val endRange = (it * 10) + 10
@@ -55,32 +57,33 @@ class GameEngine
         }
     }
 
-    private fun ArrayList<Item>.forEachCol(column: (ArrayList<Item>) -> Unit) {
+    private inline fun ArrayList<Item>.forEachCol(column: (ArrayList<Item>) -> Unit) {
         repeat(10) { i ->
             val col = ArrayList<Item>()
             repeat(10) {
-                col.add(this[it * 10 + i])
+                col.add(this.elementAt(it * 10 + i))
             }
             column(col)
         }
     }
 
     private fun check3MatchPerList(list: List<Item>): List<Int> {
-        println("Checking ${list.map { it.letter }}")
         val matches = ArrayList<Int>()
         var letter = ""
-        list.forEachIndexed { i, it ->
-            when {
-                matches.size == 5 -> return@forEachIndexed
-                letter == it.letter -> matches.add(it.position)
-                matches.size > 2 -> return@forEachIndexed
-                else -> matches.clear()
+        run loop@{
+            list.forEach {
+                when {
+                    matches.size == 5 -> return@loop
+                    letter == it.letter -> matches.add(it.position)
+                    matches.size >= 3 -> return@loop
+                    else -> matches.clear()
+                }
+                letter = it.letter
+                matches.addUnique(it.position)
             }
-            letter = it.letter
-            matches.addUnique(it.position)
         }
         return when {
-            matches.size > 2 -> matches
+            matches.size >= 3 -> matches
             else -> emptyList()
         }
     }
