@@ -53,7 +53,7 @@ fun Board(boardSize: Int = 400) {
 }
 
 @Composable
-fun Cell(item: Item, cellSize: Int) {
+fun Cell(item: Item?, cellSize: Int) {
     val scope = rememberCoroutineScope()
     val offset = remember {
         Animatable(initialValue = 0f)
@@ -62,25 +62,27 @@ fun Cell(item: Item, cellSize: Int) {
     LaunchedEffect(key1 = true, contextMenuWidth) {
         offset.animateTo(contextMenuWidth)
     }
-    Icon(
-        item.icon,
-        contentDescription = null,
-        tint = item.color,
-        modifier = Modifier
-            .size(cellSize.dp)
-            .pointerInput(contextMenuWidth) {
-                detectHorizontalDragGestures(
-                    onHorizontalDrag = { _, dragAmount ->
-                        scope.launch {
-                            val newOffset = (offset.value + dragAmount)
-                                .coerceIn(0f, contextMenuWidth)
-                            offset.snapTo(newOffset)
-                        }
-                    },
-                    onDragEnd = {
+    item?.let {
+        Icon(
+            it.icon,
+            contentDescription = null,
+            tint = it.color,
+            modifier = Modifier
+                .size(cellSize.dp)
+                .pointerInput(contextMenuWidth) {
+                    detectHorizontalDragGestures(
+                        onHorizontalDrag = { _, dragAmount ->
+                            scope.launch {
+                                val newOffset = (offset.value + dragAmount)
+                                    .coerceIn(0f, contextMenuWidth)
+                                offset.snapTo(newOffset)
+                            }
+                        },
+                        onDragEnd = {
 
-                    },
-                )
-            }
-    )
+                        },
+                    )
+                }
+        )
+    }
 }

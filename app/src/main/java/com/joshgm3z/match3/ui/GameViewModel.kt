@@ -14,11 +14,11 @@ data class Item(
     val icon: ImageVector,
     val letter: String,
     val color: Color,
-    val position: Int = -1,
+    var position: Int = -1,
 )
 
 class BoardData(
-    val items: List<Item>,
+    val items: List<Item?>,
     val overlayText: String,
 )
 

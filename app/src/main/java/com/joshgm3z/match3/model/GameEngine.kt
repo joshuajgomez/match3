@@ -7,22 +7,36 @@ import javax.inject.Inject
 class GameEngine
 @Inject constructor() {
 
-    private val items: ArrayList<Item> = getItems() as ArrayList<Item>
+    private val items: ArrayList<Item?> = getItems()
 
+    init {
+        reposition()
+    }
+
+    private fun reposition() = items.forEachIndexed { index, item ->
+        item?.position = index
+    }
+
+    /**
+     * Moves one item from source to target
+     */
     fun move(source: Int, target: Int) {
         println("Moving $source to $target")
         items.swap(source, target)
-
-        check3Match().let {
-            if (it.isNotEmpty()) {
-                // match found
-                removeItems(it)
-            }
-        }
+        reposition()
     }
 
-    private fun removeItems(list: List<Int>) {
+    /**
+     * Checks if match of 3 or more items exist
+     * First searches all rows, then columns
+     */
+    fun checkMatch(): List<Int> = check3Match()
+
+    fun removeItems(list: List<Int>) {
         println("Removing $list")
+        list.forEach {
+            items[it] = null
+        }
     }
 
     private fun check3Match(): List<Int> {
@@ -49,19 +63,19 @@ class GameEngine
         return match
     }
 
-    private inline fun ArrayList<Item>.forEachRow(row: (ArrayList<Item>) -> Unit) {
+    private inline fun ArrayList<Item?>.forEachRow(row: (ArrayList<Item>) -> Unit) {
         repeat(10) {
             val start = it * 10
             val endRange = (it * 10) + 10
-            row(subList(start, endRange).toList() as ArrayList<Item>)
+            row(subList(start, endRange) as ArrayList<Item>)
         }
     }
 
-    private inline fun ArrayList<Item>.forEachCol(column: (ArrayList<Item>) -> Unit) {
+    private inline fun ArrayList<Item?>.forEachCol(column: (ArrayList<Item>) -> Unit) {
         repeat(10) { i ->
             val col = ArrayList<Item>()
             repeat(10) {
-                col.add(this.elementAt(it * 10 + i))
+                this.elementAt(it * 10 + i)?.let { it1 -> col.add(it1) }
             }
             column(col)
         }
@@ -88,7 +102,7 @@ class GameEngine
         }
     }
 
-    fun listItems(): List<Item> {
+    fun listItems(): List<Item?> {
         return items
     }
 

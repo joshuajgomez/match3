@@ -15,7 +15,8 @@ val item3 = Item(Icons.Default.ArrowUpward, "C", Color.Black)
 val item4 = Item(Icons.Rounded.Adb, "D", Color.Green)
 val item5 = Item(Icons.Rounded.AcUnit, "E", Color.Blue)
 
-fun getItems() = listOf(
+@Suppress("UNCHECKED_CAST")
+fun getItems(): ArrayList<Item?> = arrayListOf(
     item1, item2, item3, item4, item5, item1, item2, item3, item4, item5,
     item1, item2, item3, item4, item5, item1, item2, item3, item4, item5,
     item1, item2, item3, item4, item5, item1, item2, item3, item4, item5,
@@ -26,6 +27,4 @@ fun getItems() = listOf(
     item1, item2, item3, item4, item5, item1, item2, item3, item4, item5,
     item1, item2, item3, item4, item5, item1, item2, item3, item4, item5,
     item1, item2, item3, item4, item5, item1, item2, item3, item4, item5,
-).mapIndexed { index, item ->
-    item.copy(position = index)
-}
+) as ArrayList<Item?>
