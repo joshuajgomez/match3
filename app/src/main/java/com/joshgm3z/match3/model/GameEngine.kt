@@ -1,9 +1,13 @@
 package com.joshgm3z.match3.model
 
 import com.joshgm3z.match3.ui.Item
+import com.joshgm3z.match3.utils.Logger
 import com.joshgm3z.match3.utils.getItems
+import com.joshgm3z.match3.utils.randomItem
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class GameEngine
 @Inject constructor() {
 
@@ -13,8 +17,10 @@ class GameEngine
         reposition()
     }
 
-    private fun reposition() = items.forEachIndexed { index, item ->
-        item?.position = index
+    private fun reposition() {
+        items = items.mapIndexed { index, item ->
+            item?.copy(position = index)
+        }.toArrayList()
     }
 
     /**
@@ -52,7 +58,7 @@ class GameEngine
         println("filled")
         items = items.map {
             when {
-                it == null -> getItems().random()
+                it == null -> randomItem()
                 else -> it
             }
         }.toArrayList()

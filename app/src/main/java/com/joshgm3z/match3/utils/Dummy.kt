@@ -16,6 +16,8 @@ val item3 = Item(Icons.Default.ArrowUpward, "C", Color.Black)
 val item4 = Item(Icons.Rounded.Adb, "D", Color.Green)
 val item5 = Item(Icons.Rounded.AcUnit, "E", Color.Blue)
 
+fun randomItem() = listOf(item1, item2, item3, item4, item5).random()
+
 fun getItems(): ArrayList<Item?> = listOf(
     item1, item2, item3, item4, item5, item1, item2, item3, item4, item5,
     item1, item2, item3, item4, item5, item1, item2, item3, item4, item5,

@@ -8,7 +8,7 @@ fun <Int> ArrayList<Int>.addUnique(i: Int) {
     }
 }
 
-fun <E> ArrayList<E>.swap(
+fun <Item> ArrayList<Item>.swap(
     source: Int,
     target: Int
 ) {
