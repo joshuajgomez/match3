@@ -7,7 +7,7 @@ import javax.inject.Inject
 class GameEngine
 @Inject constructor() {
 
-    private val items: ArrayList<Item?> = getItems()
+    private var items: ArrayList<Item?> = getItems()
 
     init {
         reposition()
@@ -30,6 +30,40 @@ class GameEngine
         println("Removing $list")
         list.forEach {
             items[it] = null
+        }
+    }
+
+    /**
+     * Fill empty cells with random items
+     */
+    fun fillEmptyCells() {
+        println("Filling empty cells")
+        val nullIndices = items.mapIndexedNotNull { index, item ->
+            when {
+                item == null -> index
+                else -> null
+            }
+        }
+        nullIndices.forEach {
+            shiftDown(it)
+        }
+        println("shifted")
+        printGame(items)
+        println("filled")
+        items = items.map {
+            when {
+                it == null -> getItems().random()
+                else -> it
+            }
+        }.toArrayList()
+        reposition()
+    }
+
+    private fun shiftDown(index: Int) {
+        var counter = index
+        while (counter >= 10) {
+            items.swap(counter, counter - 10)
+            counter -= 10
         }
     }
 
@@ -66,4 +100,3 @@ class GameEngine
     }
 
 }
-

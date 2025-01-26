@@ -14,27 +14,28 @@ class GameEngineTest {
 
     @Test
     fun move() {
-        printGame()
+        print()
         gameEngine.move(1, 2)
-        printGame()
+        print()
     }
 
     @Test
     fun removeItems() {
-        printGame()
+        print()
         gameEngine.move(2, 6)
-        printGame()
+        print()
         gameEngine.removeItems(listOf(2, 4, 5))
-        printGame()
+        print()
     }
 
-    private fun printGame() {
-        val items = gameEngine.listItems()
-        items.forEachIndexed { index, item ->
-            print("${item?.letter ?: "?"}  ")
-            if ((index + 1) % 10 == 0) {
-                println()
-            }
-        }
+    @Test
+    fun fillEmptyCells() {
+        gameEngine.removeItems(listOf(95, 96, 97))
+        print()
+        gameEngine.fillEmptyCells()
+        print()
     }
+
+    private fun print() =
+        printGame(gameEngine.listItems())
 }

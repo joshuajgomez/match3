@@ -56,3 +56,14 @@ fun check3MatchPerList(list: List<Item>): List<Int> {
         else -> emptyList()
     }
 }
+
+fun <Item> List<Item?>.toArrayList(): ArrayList<Item?> = this as ArrayList<Item?>
+
+fun printGame(items: List<Item?>) {
+    items.forEachIndexed { index, item ->
+        print("${item?.letter ?: "?"}  ")
+        if ((index + 1) % 10 == 0) {
+            println()
+        }
+    }
+}
