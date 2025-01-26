@@ -45,26 +45,39 @@ class GameViewModel
         when {
             matches.isEmpty() -> when {
                 lastMove.first == 0 && lastMove.second == 0 -> {} // new game
-                else -> {
-                    // revert
-                    viewModelScope.launch {
-                        delay(1000)
-                        _uiState.update {
-                            it.copy(
-                                candies = gameEngine.move(
-                                    it.candies,
-                                    lastMove.second,
-                                    lastMove.first
-                                )
+                else -> viewModelScope.launch {
+                    delay(1000)
+                    _uiState.update {
+                        it.copy(
+                            candies = gameEngine.move(
+                                it.candies,
+                                lastMove.second,
+                                lastMove.first
                             )
-                        }
+                        )
                     }
+                    lastMove = Pair(0, 0)
                 }
             }
 
-            else -> {
+            else -> viewModelScope.launch {
                 highLightMatch(matches)
+                delay(1000)
+                removeHighlight()
+                _uiState.update {
+                    it.copy(
+                        candies = gameEngine.removeItems(it.candies, matches)
+                    )
+                }
+                delay(200)
+                _uiState.update {
+                    it.copy(
+                        candies = gameEngine.fillEmptyCells(it.candies)
+                    )
+                }
+                checkMatch()
             }
+
         }
     }
 

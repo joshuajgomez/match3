@@ -9,6 +9,11 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.joshgm3z.match3.ui.theme.Blue10
+import com.joshgm3z.match3.ui.theme.Green10
+import com.joshgm3z.match3.ui.theme.Purple50
+import com.joshgm3z.match3.ui.theme.Red10
+import com.joshgm3z.match3.ui.theme.Yellow10
 
 sealed class Candy(
     val icon: ImageVector,
@@ -25,7 +30,7 @@ sealed class Candy(
 data class Red(val id: String = "R") : Candy(
     icon = Icons.Filled.Star,
     letter = id,
-    color = Color.Red,
+    color = Red10,
 ) {
     override fun toString(): String {
         return "$letter.$position"
@@ -35,7 +40,7 @@ data class Red(val id: String = "R") : Candy(
 data class Blue(val id: String = "B") : Candy(
     icon = Icons.Filled.Settings,
     letter = id,
-    color = Color.Blue,
+    color = Blue10,
 ) {
     override fun toString(): String {
         return "$letter.$position"
@@ -45,7 +50,7 @@ data class Blue(val id: String = "B") : Candy(
 data class Yellow(val id: String = "Y") : Candy(
     icon = Icons.Filled.Save,
     letter = id,
-    color = Color.Yellow,
+    color = Yellow10,
 ) {
     override fun toString(): String {
         return "$letter.$position"
@@ -55,7 +60,7 @@ data class Yellow(val id: String = "Y") : Candy(
 data class Green(val id: String = "G") : Candy(
     icon = Icons.Filled.Search,
     letter = id,
-    color = Color.Green,
+    color = Green10,
 ) {
     override fun toString(): String {
         return "$letter.$position"
@@ -65,7 +70,7 @@ data class Green(val id: String = "G") : Candy(
 data class Purple(val id: String = "P") : Candy(
     icon = Icons.Filled.CameraAlt,
     letter = "P",
-    color = Color.Magenta,
+    color = Purple50,
 ) {
     override fun toString(): String {
         return "$letter.$position"
