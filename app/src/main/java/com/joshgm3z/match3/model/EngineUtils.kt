@@ -1,6 +1,6 @@
 package com.joshgm3z.match3.model
 
-import com.joshgm3z.match3.ui.Item
+import com.joshgm3z.match3.model.candy.Candy
 
 fun <Int> ArrayList<Int>.addUnique(i: Int) {
     when {
@@ -8,35 +8,40 @@ fun <Int> ArrayList<Int>.addUnique(i: Int) {
     }
 }
 
-fun <Item> ArrayList<Item>.swap(
+fun List<Candy>.swap(
     source: Int,
     target: Int
-) {
-    val sourceTemp = this[source]
-    val targetTemp = this[target]
-    this[source] = targetTemp
-    this[target] = sourceTemp
-}
-
-inline fun ArrayList<Item?>.forEachRow(row: (ArrayList<Item>) -> Unit) {
-    repeat(10) {
-        val start = it * 10
-        val endRange = (it * 10) + 10
-        row(subList(start, endRange) as ArrayList<Item>)
+): List<Candy> {
+    val sourceItem = this[source]
+    val targetItem = this[target]
+    return map {
+        when (it.position) {
+            source -> targetItem
+            target -> sourceItem
+            else -> it
+        }
     }
 }
 
-inline fun ArrayList<Item?>.forEachCol(column: (ArrayList<Item>) -> Unit) {
+inline fun List<Candy>.forEachRow(row: (List<Candy>) -> Unit) {
+    repeat(10) {
+        val start = it * 10
+        val endRange = (it * 10) + 10
+        row(subList(start, endRange))
+    }
+}
+
+inline fun List<Candy>.forEachCol(column: (List<Candy>) -> Unit) {
     repeat(10) { i ->
-        val col = ArrayList<Item>()
+        val col = arrayListOf<Candy>()
         repeat(10) {
-            this.elementAt(it * 10 + i)?.let { it1 -> col.add(it1) }
+            this.elementAt(it * 10 + i).let { it1 -> col.add(it1) }
         }
         column(col)
     }
 }
 
-fun check3MatchPerList(list: List<Item>): List<Int> {
+fun check3MatchPerList(list: List<Candy>): List<Int> {
     val matches = ArrayList<Int>()
     var letter = ""
     run loop@{
@@ -48,7 +53,9 @@ fun check3MatchPerList(list: List<Item>): List<Int> {
                 else -> matches.clear()
             }
             letter = it.letter
-            matches.addUnique(it.position)
+            it.let {
+                matches.addUnique(it.position)
+            }
         }
     }
     return when {
@@ -57,13 +64,17 @@ fun check3MatchPerList(list: List<Item>): List<Int> {
     }
 }
 
-fun <Item> List<Item?>.toArrayList(): ArrayList<Item?> = this as ArrayList<Item?>
-
-fun printGame(items: List<Item?>) {
+fun printGame(items: List<Candy>) {
     items.forEachIndexed { index, item ->
-        print("${item?.letter ?: "?"}  ")
+        print("${item.letter}  ")
         if ((index + 1) % 10 == 0) {
             println()
         }
     }
+}
+
+fun List<Candy>.reposition()
+        : List<Candy> = mapIndexed { index, item ->
+    item.position = index
+    item
 }

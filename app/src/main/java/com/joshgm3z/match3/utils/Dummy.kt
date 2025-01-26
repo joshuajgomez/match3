@@ -1,32 +1,23 @@
 package com.joshgm3z.match3.utils
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowUpward
-import androidx.compose.material.icons.rounded.AcUnit
-import androidx.compose.material.icons.rounded.Adb
-import androidx.compose.material.icons.rounded.ArrowDownward
-import androidx.compose.ui.graphics.Color
-import com.joshgm3z.match3.model.toArrayList
-import com.joshgm3z.match3.ui.Item
+import com.joshgm3z.match3.model.candy.Blue
+import com.joshgm3z.match3.model.candy.Candy
+import com.joshgm3z.match3.model.candy.Green
+import com.joshgm3z.match3.model.candy.Purple
+import com.joshgm3z.match3.model.candy.Red
+import com.joshgm3z.match3.model.candy.Yellow
 
-val item1 = Item(Icons.Default.ArrowBack, "A", Color.Red)
-val item2 = Item(Icons.Rounded.ArrowDownward, "B", Color.Cyan)
-val item3 = Item(Icons.Default.ArrowUpward, "C", Color.Black)
-val item4 = Item(Icons.Rounded.Adb, "D", Color.Green)
-val item5 = Item(Icons.Rounded.AcUnit, "E", Color.Blue)
+fun randomCandy() = listOf(Red(), Green(), Blue(), Yellow(), Purple()).random()
 
-fun randomItem() = listOf(item1, item2, item3, item4, item5).random()
-
-fun getItems(): ArrayList<Item?> = listOf(
-    item1, item2, item3, item4, item5, item1, item2, item3, item4, item5,
-    item1, item2, item3, item4, item5, item1, item2, item3, item4, item5,
-    item1, item2, item3, item4, item5, item1, item2, item3, item4, item5,
-    item2, item2, item3, item4, item5, item1, item2, item3, item4, item5,
-    item1, item2, item3, item4, item5, item1, item2, item3, item4, item5,
-    item1, item2, item3, item4, item5, item1, item2, item3, item4, item5,
-    item1, item2, item3, item4, item5, item1, item2, item3, item4, item5,
-    item1, item2, item3, item4, item5, item1, item2, item3, item4, item5,
-    item1, item2, item3, item4, item5, item1, item2, item3, item4, item5,
-    item1, item2, item3, item4, item5, item1, item2, item3, item4, item5,
-).shuffled().toArrayList()
+fun getCandies(): List<Candy> = listOf(
+    Red(), Green(), Blue(), Yellow(), Purple(), Red(), Green(), Blue(), Yellow(), Purple(),
+    Red(), Green(), Blue(), Yellow(), Purple(), Red(), Green(), Blue(), Yellow(), Purple(),
+    Red(), Green(), Blue(), Yellow(), Purple(), Red(), Green(), Blue(), Yellow(), Purple(),
+    Red(), Green(), Blue(), Yellow(), Purple(), Red(), Green(), Blue(), Yellow(), Purple(),
+    Red(), Green(), Blue(), Yellow(), Purple(), Red(), Green(), Blue(), Yellow(), Purple(),
+    Red(), Green(), Blue(), Yellow(), Purple(), Red(), Green(), Blue(), Yellow(), Purple(),
+    Red(), Green(), Blue(), Yellow(), Purple(), Red(), Green(), Blue(), Yellow(), Purple(),
+    Red(), Green(), Blue(), Yellow(), Purple(), Red(), Green(), Blue(), Yellow(), Purple(),
+    Red(), Green(), Blue(), Yellow(), Purple(), Red(), Green(), Blue(), Yellow(), Purple(),
+    Red(), Green(), Blue(), Yellow(), Purple(), Red(), Green(), Blue(), Yellow(), Purple(),
+).shuffled()

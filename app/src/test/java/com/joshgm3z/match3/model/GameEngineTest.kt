@@ -1,41 +1,42 @@
 package com.joshgm3z.match3.model
 
+import com.joshgm3z.match3.utils.getCandies
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 
 class GameEngineTest {
 
     private lateinit var gameEngine: GameEngine
+    private val candies = getCandies()
 
     @Before
     fun setUp() {
         gameEngine = GameEngine()
     }
 
+    @After
+    fun tearDown() {
+        candies.forEach {
+            print(it)
+        }
+    }
+
     @Test
     fun move() {
-        print()
-        gameEngine.move(1, 2)
-        print()
+        gameEngine.move(candies, 1, 2)
     }
 
     @Test
     fun removeItems() {
-        print()
-        gameEngine.move(2, 6)
-        print()
-        gameEngine.removeItems(listOf(2, 4, 5))
-        print()
+        gameEngine.move(candies, 2, 6)
+        gameEngine.removeItems(candies, listOf(2, 4, 5))
     }
 
     @Test
     fun fillEmptyCells() {
-        gameEngine.removeItems(listOf(95, 96, 97))
-        print()
-        gameEngine.fillEmptyCells()
-        print()
+        gameEngine.removeItems(candies, listOf(95, 96, 97))
+        gameEngine.fillEmptyCells(candies)
     }
 
-    private fun print() =
-        printGame(gameEngine.listItems())
 }

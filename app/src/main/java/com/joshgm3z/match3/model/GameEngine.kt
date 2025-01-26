@@ -1,9 +1,8 @@
 package com.joshgm3z.match3.model
 
-import com.joshgm3z.match3.ui.Item
-import com.joshgm3z.match3.utils.Logger
-import com.joshgm3z.match3.utils.getItems
-import com.joshgm3z.match3.utils.randomItem
+import com.joshgm3z.match3.model.candy.Candy
+import com.joshgm3z.match3.model.candy.Empty
+import com.joshgm3z.match3.utils.randomCandy
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -11,76 +10,65 @@ import javax.inject.Singleton
 class GameEngine
 @Inject constructor() {
 
-    private var items: ArrayList<Item?> = getItems()
-
-    init {
-        reposition()
-    }
-
-    private fun reposition() {
-        items = items.mapIndexed { index, item ->
-            item?.copy(position = index)
-        }.toArrayList()
-    }
-
     /**
      * Moves one item from source to target
      */
-    fun move(source: Int, target: Int) {
+    fun move(candies: List<Candy>, source: Int, target: Int): List<Candy> {
         println("Moving $source to $target")
-        items.swap(source, target)
-        reposition()
+        return candies.swap(source, target).reposition()
     }
 
-    fun removeItems(list: List<Int>) {
+    fun removeItems(candies: List<Candy>, list: List<Int>): List<Candy> {
         println("Removing $list")
-        list.forEach {
-            items[it] = null
+        return candies.map {
+            when {
+                list.contains(it.position) -> Empty()
+                else -> it
+            }
         }
     }
 
     /**
      * Fill empty cells with random items
      */
-    fun fillEmptyCells() {
+    fun fillEmptyCells(candies: List<Candy>): List<Candy> {
         println("Filling empty cells")
-        val nullIndices = items.mapIndexedNotNull { index, item ->
+        val emptyCells = candies.mapIndexedNotNull { index, it ->
             when {
-                item == null -> index
+                it is Empty -> index
                 else -> null
             }
         }
-        nullIndices.forEach {
-            shiftDown(it)
+        var candiesTemp = candies
+        emptyCells.forEach {
+            candiesTemp = shiftDown(candiesTemp, it)
         }
-        println("shifted")
-        printGame(items)
-        println("filled")
-        items = items.map {
+        return candies.map {
             when {
-                it == null -> randomItem()
+                it is Empty -> randomCandy()
                 else -> it
             }
-        }.toArrayList()
-        reposition()
+        }.reposition()
     }
 
-    private fun shiftDown(index: Int) {
+    private fun shiftDown(candies: List<Candy>, index: Int): List<Candy> {
         var counter = index
+        var shifted = candies
         while (counter >= 10) {
-            items.swap(counter, counter - 10)
+            shifted = shifted.swap(counter, counter - 10)
             counter -= 10
         }
+        return shifted
     }
 
     /**
      * Checks if match of 3 or more items exist
      * First searches all rows, then columns
      */
-    private fun check3Match(): List<Int> {
+    fun check3Match(candies: List<Candy>): List<Int> {
         var match = listOf<Int>()
         run loop@{
-            items.forEachRow { it ->
+            candies.forEachRow { it ->
                 check3MatchPerList(it).let {
                     if (it.isNotEmpty()) {
                         match = it
@@ -89,7 +77,7 @@ class GameEngine
                 }
             }
             if (match.isNotEmpty()) return match
-            items.forEachCol { it ->
+            candies.forEachCol { it ->
                 check3MatchPerList(it).let {
                     if (it.isNotEmpty()) {
                         match = it
@@ -99,10 +87,6 @@ class GameEngine
             }
         }
         return match
-    }
-
-    fun listItems(): List<Item?> {
-        return items
     }
 
 }
