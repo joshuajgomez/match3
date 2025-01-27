@@ -14,11 +14,11 @@ fun List<Candy>.swap(
 ): List<Candy> {
     val sourceItem = this[source]
     val targetItem = this[target]
-    return map {
-        when (it.position) {
+    return mapIndexed { index, candy ->
+        when (index) {
             source -> targetItem
             target -> sourceItem
-            else -> it
+            else -> candy
         }
     }
 }
@@ -64,13 +64,12 @@ fun check3MatchPerList(list: List<Candy>): List<Int> {
     }
 }
 
-fun printGame(items: List<Candy>) {
-    items.forEachIndexed { index, item ->
-        print("${item.letter}  ")
-        if ((index + 1) % 10 == 0) {
-            println()
-        }
+fun printCandies(candies: List<Candy>) {
+    candies.forEachIndexed { index, candy ->
+        print("$candy\t")
+        if ((index + 1) % 10 == 0) println()
     }
+    println()
 }
 
 fun List<Candy>.reposition()

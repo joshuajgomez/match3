@@ -8,35 +8,39 @@ import org.junit.Test
 class GameEngineTest {
 
     private lateinit var gameEngine: GameEngine
-    private val candies = getCandies()
+    private var candies = getCandies()
 
     @Before
     fun setUp() {
         gameEngine = GameEngine()
+        candies.reposition()
     }
 
     @After
     fun tearDown() {
-        candies.forEach {
-            print(it)
-        }
+        printCandies()
+    }
+
+    private fun printCandies() {
+        printCandies(candies)
     }
 
     @Test
     fun move() {
-        gameEngine.move(candies, 1, 2)
+        candies = gameEngine.move(candies, 1, 2)
     }
 
     @Test
     fun removeItems() {
-        gameEngine.move(candies, 2, 6)
-        gameEngine.removeItems(candies, listOf(2, 4, 5))
+        candies = gameEngine.move(candies, 2, 6)
+        candies = gameEngine.removeItems(candies, listOf(2, 4, 5))
     }
 
     @Test
     fun fillEmptyCells() {
-        gameEngine.removeItems(candies, listOf(95, 96, 97))
-        gameEngine.fillEmptyCells(candies)
+        candies = gameEngine.removeItems(candies, listOf(95, 96, 97))
+        printCandies()
+        candies = gameEngine.fillEmptyCells(candies)
     }
 
 }

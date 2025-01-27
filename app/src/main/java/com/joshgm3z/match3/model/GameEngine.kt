@@ -43,7 +43,7 @@ class GameEngine
         emptyCells.forEach {
             candiesTemp = shiftDown(candiesTemp, it)
         }
-        return candies.map {
+        return candiesTemp.map {
             when {
                 it is Empty -> randomCandy()
                 else -> it

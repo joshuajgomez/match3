@@ -23,7 +23,7 @@ sealed class Candy(
     var highLight: Boolean = false,
 ) {
     override fun toString(): String {
-        return "$letter.$position"
+        return "$letter$position"
     }
 }
 
@@ -33,7 +33,7 @@ data class Red(val id: String = "R") : Candy(
     color = Red10,
 ) {
     override fun toString(): String {
-        return "$letter.$position"
+        return "$letter$position"
     }
 }
 
@@ -43,7 +43,7 @@ data class Blue(val id: String = "B") : Candy(
     color = Blue10,
 ) {
     override fun toString(): String {
-        return "$letter.$position"
+        return "$letter$position"
     }
 }
 
@@ -53,7 +53,7 @@ data class Yellow(val id: String = "Y") : Candy(
     color = Yellow10,
 ) {
     override fun toString(): String {
-        return "$letter.$position"
+        return "$letter$position"
     }
 }
 
@@ -63,7 +63,7 @@ data class Green(val id: String = "G") : Candy(
     color = Green10,
 ) {
     override fun toString(): String {
-        return "$letter.$position"
+        return "$letter$position"
     }
 }
 
@@ -73,7 +73,7 @@ data class Purple(val id: String = "P") : Candy(
     color = Purple50,
 ) {
     override fun toString(): String {
-        return "$letter.$position"
+        return "$letter$position"
     }
 }
 
@@ -83,6 +83,6 @@ data class Empty(val id: String = "?") : Candy(
     color = Color.White,
 ) {
     override fun toString(): String {
-        return "$letter.$position"
+        return "$letter$position"
     }
 }
