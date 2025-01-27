@@ -14,11 +14,11 @@ fun List<Candy>.swap(
 ): List<Candy> {
     val sourceItem = this[source]
     val targetItem = this[target]
-    return mapIndexed { index, candy ->
-        when (index) {
+    return map {
+        when (it.position) {
             source -> targetItem
             target -> sourceItem
-            else -> candy
+            else -> it
         }
     }
 }

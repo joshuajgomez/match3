@@ -77,10 +77,14 @@ data class Purple(val id: String = "P") : Candy(
     }
 }
 
-data class Empty(val id: String = "?") : Candy(
+data class Empty(
+    val id: String = "?",
+    val pos: Int
+) : Candy(
     icon = Icons.Filled.Clear,
     letter = id,
     color = Color.White,
+    position = pos,
 ) {
     override fun toString(): String {
         return "$letter$position"

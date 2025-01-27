@@ -22,7 +22,7 @@ class GameEngine
         println("Removing $list")
         return candies.map {
             when {
-                list.contains(it.position) -> Empty()
+                list.contains(it.position) -> Empty(pos = it.position)
                 else -> it
             }
         }
@@ -55,7 +55,7 @@ class GameEngine
         var counter = index
         var shifted = candies
         while (counter >= 10) {
-            shifted = shifted.swap(counter, counter - 10)
+            shifted = shifted.swap(counter, counter - 10).reposition()
             counter -= 10
         }
         return shifted
