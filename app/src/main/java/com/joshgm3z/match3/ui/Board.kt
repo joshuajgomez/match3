@@ -93,8 +93,8 @@ fun Cell(
                 offsetX,
                 offsetY,
                 onOffsetChanged = { x, y ->
-                    offsetX = x
-                    offsetY = y
+                    /*offsetX = x
+                    offsetY = y*/
                 },
                 onSwipe = { direction ->
                     Logger.debug("direction=$direction, position=${candy.position}")
